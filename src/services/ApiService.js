@@ -15,7 +15,7 @@ class SuperheroService {
       console.log(data)
       return data
     } catch (error) {
-      console.error(error)
+      console.error('Error al traer la data:', error)
       return null
     }
   }

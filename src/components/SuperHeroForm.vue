@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 const heroId = ref('')
 
-const emit = defineEmits()
+const emit = defineEmits(['buscar-hero'])
 
 const sendHeroId = () => {
   if (heroId.value) {

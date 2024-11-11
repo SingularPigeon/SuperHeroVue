@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 import ApiService from '@/services/ApiService'
 import SuperHeroForm from '@/components/SuperHeroForm.vue'
-import SuperHeroCard from '@/components/SuperheroCard.vue'
-import SuperHeroStats from '@/components/SuperheroStats.vue'
+import SuperHeroCard from '@/components/SuperHeroCard.vue'
+import SuperHeroStats from '@/components/SuperHeroStats.vue'
 
 const heroData = ref(null)
 
@@ -14,16 +14,11 @@ const fetchSuperheroData = async (id) => {
 }
 </script>
 <template>
-  <div class="superhero-app">
+  <div class="container">
     <SuperHeroForm @buscar-hero="fetchSuperheroData" />
     <SuperHeroCard :hero="heroData" v-if="heroData" />
     <SuperHeroStats :powerstats="heroData.powerstats" :heroName="heroData.name" v-if="heroData" />
   </div>
 </template>
 
-<style scoped>
-.superhero-app {
-  max-width: 500px;
-  margin: auto;
-}
-</style>
+<style scoped></style>
