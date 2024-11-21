@@ -13,7 +13,9 @@ const searchHero = () => {
 </script>
 
 <template>
-  <header class="bg-dark text-white py-4 text-center">
+  <header
+    class="bg-dark text-white text-center d-flex flex-column justify-content-center algin-items-center"
+  >
     <h1 class="display-4 text-warning">Encuentra tu Superhéroe</h1>
     <p>Ingresa el ID para buscar información sobre un superhéroe o heroína.</p>
     <div class="container mt-3">
@@ -39,5 +41,6 @@ header {
   background-size: cover;
   background-position: center;
   color: #fff;
+  height: 50rem;
 }
 </style>

@@ -59,3 +59,11 @@ defineProps({
     </div>
   </div>
 </template>
+<style scoped>
+.card {
+  width: 40rem;
+}
+.icono {
+  width: 3rem;
+}
+</style>
