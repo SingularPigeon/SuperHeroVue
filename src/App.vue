@@ -1,10 +1,11 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import ApiService from './services/ApiService'
 import SuperHeroNav from './components/SuperHeroNav.vue'
 import SuperHeroHeader from './components/SuperHeroHeader.vue'
 import SuperHeroCard from './components/SuperHeroCard.vue'
 import SuperHeroFooter from './components/SuperHeroFooter.vue'
+import SuperHeroNoData from './components/SuperHeroNoData.vue'
 
 const hero = ref(null)
 const errorMessage = ref('')
@@ -38,12 +39,16 @@ const fetchHero = async (id) => {
   }
 }
 
+// Comprobación si las estadísticas son válidas
+const hasValidStats = computed(() => {
+  if (!hero.value || !hero.value.powerstats) return false
+  return Object.values(hero.value.powerstats).some((value) => value !== 'null' && value > 0)
+})
+
 // Configuración inicial del gráfico
 const getChartOptions = (stats, heroName) => ({
   animationEnabled: true,
   backgroundColor: '#212529',
-  width: '500',
-  heigth: '500',
 
   title: {
     text: `Estadísticas para ${heroName || 'Desconocido'}`,
@@ -57,36 +62,30 @@ const getChartOptions = (stats, heroName) => ({
       indexLabelFontColor: '#fafafa',
       dataPoints: Object.entries(stats || {}).map(([key, value]) => ({
         label: key,
-
         y: value !== 'null' ? Number(value) : 0,
       })),
     },
   ],
 })
 </script>
-
 <template>
   <SuperHeroNav />
   <div>
     <SuperHeroHeader @search-hero="fetchHero" />
-    <div class="container my-5">
-      <div class="row">
+    <div class="container my-5 pb-5">
+      <div class="row pb-5">
         <p v-if="errorMessage" class="text-danger text-center">{{ errorMessage }}</p>
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <SuperHeroCard v-if="hero" :hero="hero" id="target-component" />
         </div>
-        <div class="col-md-6">
-          <div v-if="hero && hero.powerstats" class="chart">
+        <div class="col-12 col-md-6 text-center">
+          <div v-if="hero && hasValidStats">
             <CanvasJSChart :options="getChartOptions(hero.powerstats, hero.name)" />
           </div>
+          <SuperHeroNoData v-else-if="hero" />
         </div>
       </div>
     </div>
   </div>
   <SuperHeroFooter />
 </template>
-<style scoped>
-.chart {
-  height: 50rem;
-}
-</style>
